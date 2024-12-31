@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.esplit.duser.models.User;
 import ru.esplit.duser.repository.UserRepository;
 
+@Transactional(readOnly = true)
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void create(User user) {
         userRepository.save(user);
@@ -32,12 +35,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public void update(Long id, User updatedUser) {
         updatedUser.setId(id);
         userRepository.save(updatedUser);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
