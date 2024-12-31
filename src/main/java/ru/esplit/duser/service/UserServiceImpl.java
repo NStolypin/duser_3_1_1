@@ -34,12 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(Long id, User updatedUser) {
-        Optional<User> userO = userRepository.findById(id);
-        if (userO.isPresent()) {
-            userO.get().setName(updatedUser.getName());
-            userO.get().setEmail(updatedUser.getEmail());
-            userO.get().setAge(updatedUser.getAge());
-        }
+        updatedUser.setId(id);
         userRepository.save(updatedUser);
     }
 
