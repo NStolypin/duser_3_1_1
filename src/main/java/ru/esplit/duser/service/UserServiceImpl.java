@@ -9,7 +9,7 @@ import ru.esplit.duser.models.User;
 import ru.esplit.duser.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getAll() {
-       return userRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
@@ -33,8 +33,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void update(Long id, User updateUser) {
-    
+    public void update(Long id, User updatedUser) {
+        Optional<User> userO = userRepository.findById(id);
+        if (userO.isPresent()) {
+            userO.get().setName(updatedUser.getName());
+            userO.get().setEmail(updatedUser.getEmail());
+            userO.get().setAge(updatedUser.getAge());
+        }
+        userRepository.save(updatedUser);
     }
 
     @Override
